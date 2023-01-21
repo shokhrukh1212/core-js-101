@@ -21,6 +21,8 @@ module.exports = {
     "no-unused-vars": 0,
     "no-restricted-syntax": ["error", "FunctionExpression", "WithStatement", "BinaryExpression[operator='in']"],
     "no-labels": ["error", { "allowLoop": true }],
-    "indent": ["error"]
+    "indent": ["error"],
+    "no-param-reassign": "error",
+    "arrow-body-style": ["error", "as-needed", { "requireReturnForObjectLiteral": true }]
   },
 };
