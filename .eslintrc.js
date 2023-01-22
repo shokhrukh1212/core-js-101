@@ -23,6 +23,7 @@ module.exports = {
     "no-labels": ["error", { "allowLoop": true }],
     "indent": ["error"],
     "no-param-reassign": "error",
-    "arrow-body-style": ["error", "as-needed", { "requireReturnForObjectLiteral": true }]
+    "arrow-body-style": ["error", "as-needed", { "requireReturnForObjectLiteral": true }],
+    "consistent-return": ["error", { "treatUndefinedAsUnspecified": true }]
   },
 };
