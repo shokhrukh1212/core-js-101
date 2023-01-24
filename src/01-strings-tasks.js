@@ -112,6 +112,8 @@ function repeatString(value, count) {
   for (let i = 0; i < count; i++) {
     result += value;
   }
+
+  return result;
 }
 
 /**
@@ -201,9 +203,7 @@ function extractEmails(str) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(width, height) {
-  
-  return str;
+function getRectangleString(/* width, height */) {
 }
 
 /**

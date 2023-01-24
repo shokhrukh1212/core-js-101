@@ -34,8 +34,7 @@ function getRectangleArea(width, height) {
  *   0    => 0
  */
 function getCircleCircumference(radius) {
-  const { PI } = Math.PI;
-  return 2 * PI * radius;
+  return 2 * Math.PI * radius;
 }
 
 /**
@@ -70,7 +69,7 @@ function getAverage(value1, value2) {
  *   (-5,0) (10,-10) => 18.027756377319946
  */
 function getDistanceBetweenPoints(x1, y1, x2, y2) {
-  return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
+  return Math.sqrt(((x1 - x2) ** 2) + ((y1 - y2) ** 2));
 }
 
 /**
@@ -154,7 +153,7 @@ function parseNumberFromString(value) {
  *   1,2,3   => 3.741657386773941
  */
 function getParallelepipedDiagonal(a, b, c) {
-  return Math.sqrt(a ** 2 + b ** 2 + c ** 2);
+  return Math.sqrt((a ** 2) + (b ** 2) + (c ** 2));
 }
 
 /**
@@ -175,7 +174,7 @@ function getParallelepipedDiagonal(a, b, c) {
  *   1678, 3  => 2000
  */
 function roundToPowerOfTen(num, pow) {
-  return Math.round(num / 10 ** pow) * 10 ** pow;
+  return Math.round(num / (10 ** pow)) * (10 ** pow);
 }
 
 /**
@@ -221,7 +220,7 @@ function isPrime(num) {
  *   toNumber(new Number(42), 0) => 42
  */
 function toNumber(value, def) {
-  if (value instanceof Number) {
+  if (value instanceof Number || typeof value === 'number') {
     return value.valueOf();
   }
   return def;

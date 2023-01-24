@@ -24,6 +24,10 @@ module.exports = {
     "indent": ["error"],
     "no-param-reassign": "error",
     "arrow-body-style": ["error", "as-needed", { "requireReturnForObjectLiteral": true }],
-    "consistent-return": ["error", { "treatUndefinedAsUnspecified": true }]
+    "consistent-return": ["error", { "treatUndefinedAsUnspecified": true }],
+    "no-restricted-syntax": ["error", "ForInStatement", "LabeledStatement", "WithStatement"],
+    "no-mixed-operators": ["error", {"allowSamePrecedence": true}],
+    "max-len": ["error", { "code": 200 }],
+    "eol-last": ["error", "never"]
   },
 };

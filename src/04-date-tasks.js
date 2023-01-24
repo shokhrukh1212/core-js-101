@@ -110,7 +110,16 @@ function timeSpanToString(startDate, endDate) {
  *    Date.UTC(2016,3,5,18, 0) => Math.PI
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
-function angleBetweenClockHands(/* date */) {}
+function angleBetweenClockHands(date) {
+  const date2 = new Date(date);
+  const hour = date2.getUTCHours();
+  const minute = date2.getUTCMinutes();
+  const radianHour = 0.5 * ((60 * (hour % 12)) + minute);
+  const radianMinute = 6 * minute;
+
+  const diff = (Math.abs(radianHour - radianMinute) > 180) ? (360 - radianHour) : Math.abs(radianHour - radianMinute);
+  return (Math.PI * diff) / 180;
+}
 
 module.exports = {
   parseDataFromRfc2822,
