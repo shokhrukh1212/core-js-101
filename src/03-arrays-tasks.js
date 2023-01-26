@@ -249,11 +249,11 @@ function toArrayOfSquares(arr) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] => [ 1, 3, 6, 10, 15, 21, 28, 36, 45, 55 ]
  */
 function getMovingSum(arr) {
-  const result = [arr[0]];
-  for (let i = 0; i < arr.length; i++) {
-    result.push(result[i - 1] + arr[i]);
-  }
-  return result;
+  let sum = 0;
+  return arr.map((val) => {
+    sum += val;
+    return sum;
+  });
 }
 
 /**
@@ -292,7 +292,6 @@ function propagateItemsByPositionIndex(arr) {
       newArr.push(arr[i]);
     }
   }
-
   return newArr;
 }
 
@@ -474,7 +473,6 @@ function toStringList(arr) {
  *    ]
  */
 
-/*---------------------------------------------------------------------------------------*/
 function sortCitiesArray(arr) {
   arr.sort((a, b) => {
     if (a.country === b.country) {
@@ -482,6 +480,8 @@ function sortCitiesArray(arr) {
     }
     return a.country.localeCompare(b.country);
   });
+
+  return arr;
 }
 
 /**
@@ -501,7 +501,22 @@ function sortCitiesArray(arr) {
  *           [0,0,0,1,0],
  *           [0,0,0,0,1]]
  */
-function getIdentityMatrix(/* n */) {}
+function getIdentityMatrix(size) {
+  const matrix = [];
+  for (let i = 0; i < size; i++) {
+    const row = [];
+    for (let j = 0; j < size; j++) {
+      if (i === j) {
+        row.push(1);
+      } else {
+        row.push(0);
+      }
+    }
+    matrix.push(row);
+  }
+  return matrix;
+}
+
 /*-----------------------------------------------------------------------------------*/
 /**
  * Creates an array of integers from the specified start to end (inclusive)
@@ -570,7 +585,19 @@ function distinct(arr) {
  *    "Poland" => ["Lodz"]
  *   }
  */
-function group(/* array, keySelector, valueSelector */) {}
+function group(arr, keySelector, valueSelector) {
+  const map = new Map();
+  for (let i = 0; i < arr.length; i++) {
+    const key = keySelector(arr[i]);
+    const value = valueSelector(arr[i]);
+    if (!map.has(key)) {
+      map.set(key, []);
+    }
+    map.get(key).push(value);
+  }
+  return map;
+}
+
 /*-------------------------------------------------------------------------------------------*/
 
 /**
@@ -586,7 +613,21 @@ function group(/* array, keySelector, valueSelector */) {}
  *   [[1, 2], [3, 4], [5, 6]], (x) => x     =>   [ 1, 2, 3, 4, 5, 6 ]
  *   ['one','two','three'], (x) => x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
-function selectMany(/* arr, childrenSelector */) {}
+function selectMany(arr, callback) {
+  const result = [];
+  for (let i = 0; i < arr.length; i++) {
+    const children = callback(arr[i]);
+    if (Array.isArray(children)) {
+      for (let j = 0; j < children.length; j++) {
+        result.push(children[j]);
+      }
+    } else {
+      result.push(children);
+    }
+  }
+  return result;
+}
+
 /*-----------------------------------------------------------------------------------------------*/
 
 /**
@@ -601,7 +642,13 @@ function selectMany(/* arr, childrenSelector */) {}
  *   ['one','two','three'], [2]       => 'three'  (arr[2])
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
-function getElementByIndexes(/* arr, indexes */) {}
+function getElementByIndexes(arr, indexes) {
+  let element = arr;
+  for (let i = 0; i < indexes.length; i++) {
+    element = element[indexes[i]];
+  }
+  return element;
+}
 
 /**
  * Swaps the head and tail of the specified array:
@@ -621,7 +668,12 @@ function getElementByIndexes(/* arr, indexes */) {}
  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
  *
  */
-function swapHeadAndTail(/* arr */) {}
+function swapHeadAndTail(arr) {
+  const middle = Math.floor(arr.length / 2);
+  const tail = arr.slice(middle);
+  const head = arr.slice(0, middle);
+  return tail.concat(head);
+}
 
 module.exports = {
   findElement,

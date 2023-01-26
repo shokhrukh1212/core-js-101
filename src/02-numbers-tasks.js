@@ -106,7 +106,13 @@ function getLinearEquationRoot(a, b) {
  *   (0,1) (0,1)     => 0
  *   (0,1) (1,2)     => 0
  */
-function getAngleBetweenVectors(x1, y1, x2, y2) {}
+function getAngleBetweenVectors(x1, y1, x2, y2) {
+  const dotProduct = (x1 * x2) + (y1 * y2);
+  const magnitude1 = Math.sqrt((x1 * x1) + (y1 * y1));
+  const magnitude2 = Math.sqrt((x2 * x2) + (y2 * y2));
+  const angle = Math.acos(dotProduct / (magnitude1 * magnitude2));
+  return angle;
+}
 
 /**
  * Returns a last digit of a integer number.
@@ -135,8 +141,8 @@ function getLastDigit(value) {
  *     '37'     => 37
  * '-525.5'     => -525.5
  */
-function parseNumberFromString(value) {
-  return parseInt(value, 10);
+function parseNumberFromString(string) {
+  return Number(string);
 }
 
 /**
@@ -219,11 +225,12 @@ function isPrime(num) {
  *   toNumber(42, 0) => 42
  *   toNumber(new Number(42), 0) => 42
  */
-function toNumber(value, def) {
-  if (value instanceof Number || typeof value === 'number') {
-    return value.valueOf();
+function toNumber(value, defaultValue) {
+  const convertedValue = Number(value.valueOf());
+  if (!isNaN(convertedValue)) {
+    return convertedValue;
   }
-  return def;
+  return defaultValue;
 }
 
 module.exports = {

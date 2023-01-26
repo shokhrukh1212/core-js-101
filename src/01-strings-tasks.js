@@ -64,7 +64,8 @@ function getStringFromTemplate(firstName, lastName) {
  *   'Hello, Chuck Norris!' => 'Chuck Norris'
  */
 function extractNameFromTemplate(value) {
-  return value.substring(7);
+  const name = value.match(/Hello, (.*) (.*)!/);
+  return `${name[1]} ${name[2]}`;
 }
 
 /**
@@ -203,8 +204,13 @@ function extractEmails(str) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
+function getRectangleString(width, height) {
+  const topBottom = '┌' + '─'.repeat(width - 2) + '┐\n';
+  const middle = '│' + ' '.repeat(width - 2) + '│\n'.repeat(height - 2);
+  const bottom = '└' + '─'.repeat(width - 2) + '┘\n';
+  return topBottom + middle + bottom;
 }
+
 
 /**
  * Encode specified string with ROT13 cipher
@@ -286,8 +292,12 @@ function isString(value) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(value) {
-
+function getCardId(card) {
+  const suits = ['♣', '♦', '♥', '♠'];
+  const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+  const suit = card.slice(-1);
+  const value = card.slice(0, -1);
+  return values.indexOf(value) + (suits.indexOf(suit) * 13);
 }
 
 module.exports = {

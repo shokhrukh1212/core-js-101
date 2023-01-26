@@ -51,7 +51,9 @@ function getJSON(obj) {
  *
  */
 function fromJSON(proto, json) {
-  /* -------------------------------------------------------------------------------------------- */
+  const obj = JSON.parse(json);
+  Object.setPrototypeOf(obj, proto);
+  return obj;
 }
 
 /**
@@ -108,20 +110,97 @@ function fromJSON(proto, json) {
  *  For more examples see unit tests.
  */
 
+class CSSSelector {
+  constructor() {
+    this.selectors = [];
+  }
+
+  stringify() {
+    return this.selectors.join('');
+  }
+}
+
+class ElementSelector extends CSSSelector {
+  constructor(element) {
+    super();
+    this.selectors.push(element);
+  }
+}
+
+class IdSelector extends CSSSelector {
+  constructor(id) {
+    super();
+    this.selectors.push(`#${id}`);
+  }
+}
+
+class ClassSelector extends CSSSelector {
+  constructor(className) {
+    super();
+    this.selectors.push(`.${className}`);
+  }
+}
+
+class AttrSelector extends CSSSelector {
+  constructor(attr) {
+    super();
+    this.selectors.push(`[${attr}]`);
+  }
+}
+
+class PseudoClassSelector extends CSSSelector {
+  constructor(pseudoClass) {
+    super();
+    this.selectors.push(`:${pseudoClass}`);
+  }
+}
+
+class PseudoElementSelector extends CSSSelector {
+  constructor(pseudoElement) {
+    super();
+    this.selectors.push(`::${pseudoElement}`);
+  }
+}
+
+class CombinationSelector extends CSSSelector {
+  constructor(selector1, combinator, selector2) {
+    super();
+    this.selectors.push(
+      selector1.stringify(),
+      combinator,
+      selector2.stringify(),
+    );
+  }
+}
+
 const cssSelectorBuilder = {
-  element(value) {},
+  element(value) {
+    return new ElementSelector(value);
+  },
 
-  id(value) {},
+  id(value) {
+    return new IdSelector(value);
+  },
 
-  class(value) {},
+  class(value) {
+    return new ClassSelector(value);
+  },
 
-  attr(value) {},
+  attr(value) {
+    return new AttrSelector(value);
+  },
 
-  pseudoClass(value) {},
+  pseudoClass(value) {
+    return new PseudoClassSelector(value);
+  },
 
-  pseudoElement(value) {},
+  pseudoElement(value) {
+    return new PseudoElementSelector(value);
+  },
 
-  combine(/* selector1, combinator, selector2 */) {},
+  combine(selector1, combinator, selector2) {
+    return new CombinationSelector(selector1, combinator, selector2);
+  },
 };
 
 module.exports = {
