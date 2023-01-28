@@ -129,10 +129,10 @@ function isTriangle(a, b, c) {
  */
 function doRectanglesOverlap(rect1, rect2) {
   return !(
-    rect1.left + rect1.width < rect2.left
-    || rect1.left > rect2.left + rect2.width
-    || rect1.top + rect1.height < rect2.top
-    || rect1.top > rect2.top + rect2.height
+    rect1.left + rect1.width < rect2.left ||
+    rect1.left > rect2.left + rect2.width ||
+    rect1.top + rect1.height < rect2.top ||
+    rect1.top > rect2.top + rect2.height
   );
 }
 
@@ -166,10 +166,7 @@ function isInsideCircle(circle, point) {
   const distance = Math.sqrt(
     ((circle.center.x - point.x) ** 2) + ((circle.center.y - point.y) ** 2),
   );
-  if (distance > circle.radius) {
-    return false;
-  }
-  return true;
+  return circle > distance;
 }
 
 /**
@@ -357,7 +354,28 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(str) {}
+function isBalanced(str) {
+  let stack = [];
+  let bracketMap = {
+    ')': '(',
+    ']': '[',
+    '}': '{',
+    '>': '<',
+  };
+
+  for (let i = 0; i < str.length; i++) {
+    const char = str[i];
+    if (char === '(' || char === '[' || char === '{' || char === '<') {
+      stack.push(char);
+    } else if (char === ')' || char === ']' || char === '}' || char === '>') {
+      const last = stack.pop();
+      if (bracketMap[char] !== last) {
+        return false;
+      }
+    }
+  }
+  return stack.length === 0;
+}
 
 /**
  * Returns the string with n-ary (binary, ternary, etc, where n <= 10)
@@ -404,7 +422,6 @@ function toNaryString(num, n) {
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
 function getCommonDirectoryPath(paths) {}
-
 /**
  * Returns the product of two specified matrixes.
  * See details: https://en.wikipedia.org/wiki/Matrix_multiplication
@@ -423,14 +440,23 @@ function getCommonDirectoryPath(paths) {}
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(m1, m2) {
-  const resultArr = [];
-  for (let i = 0; i < m1.length; i++) {
-    let sum = 0;
-    for (let j = 0; j < m1[i].length; i++) {
-      sum += m1[i][j] + m2[j][i];
+function getMatrixProduct(matrix1, matrix2) {
+  // Check if the matrices are valid for multiplication
+  if (matrix1[0].length !== matrix2.length) {
+    throw new Error('The number of columns in the first matrix must match the number of rows in the second matrix.');
+  }
+
+  const result = Array(matrix1.length).fill().map(() => Array(matrix2[0].length).fill(0));
+
+  for (let i = 0; i < matrix1.length; i++) {
+    for (let j = 0; j < matrix2[0].length; j++) {
+      for (let k = 0; k < matrix1[0].length; k++) {
+        result[i][j] += matrix1[i][k] * matrix2[k][j];
+      }
     }
   }
+
+  return result;
 }
 
 /**

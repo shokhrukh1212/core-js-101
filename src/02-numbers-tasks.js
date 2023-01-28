@@ -226,11 +226,7 @@ function isPrime(num) {
  *   toNumber(new Number(42), 0) => 42
  */
 function toNumber(value, defaultValue) {
-  const convertedValue = Number(value.valueOf());
-  if (!isNaN(convertedValue)) {
-    return convertedValue;
-  }
-  return defaultValue;
+  return Number(value) ? Number(value) : defaultValue;
 }
 
 module.exports = {

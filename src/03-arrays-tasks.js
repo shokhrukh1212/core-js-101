@@ -286,13 +286,11 @@ function getSecondItems(arr) {
  *  [ 1,2,3,4,5 ] => [ 1, 2,2, 3,3,3, 4,4,4,4, 5,5,5,5,5 ]
  */
 function propagateItemsByPositionIndex(arr) {
-  const newArr = [arr[0]];
-  for (let i = 1; i < arr.length; i++) {
-    for (let j = 0; j < i + 1; j++) {
-      newArr.push(arr[i]);
-    }
-  }
-  return newArr;
+  if (arr.length === 0 || arr.length === 1) return arr;
+  return arr.reduce((acc, item, index) => {
+    acc.push(...Array(index + 1).fill(item));
+    return acc;
+  }, []);
 }
 
 /**
@@ -309,16 +307,7 @@ function propagateItemsByPositionIndex(arr) {
  *   [ 10, 10, 10, 10 ] => [ 10, 10, 10 ]
  */
 function get3TopItems(arr) {
-  const newArr = [];
-  let counter = 0;
-  while (counter < 3) {
-    const max = Math.max(...arr);
-    const index = arr.indexOf(max);
-    newArr.push(max);
-    arr.splice(index, 1);
-    counter++;
-  }
-  return newArr;
+  arr.sort((a, b) => b - a).slice(0, 3);
 }
 
 /**
@@ -335,14 +324,8 @@ function get3TopItems(arr) {
  *   [ 1, '2' ] => 1
  */
 function getPositivesCount(arr) {
-  let counter = 0;
-  arr.forEach((elem) => {
-    if (elem > 0) {
-      counter++;
-    }
-  });
-
-  return counter;
+  const newArr = arr.filter((elem) => typeof elem === 'number' && elem > 0);
+  return newArr.length;
 }
 
 /**
@@ -408,9 +391,7 @@ function getItemsSum(arr) {
  *  [ null, undefined, NaN, false, 0, '' ]  => 6
  */
 function getFalsyValuesCount(arr) {
-  const falsyValues = [false, null, 0, '', undefined, NaN];
-  arr.filter((elem) => falsyValues.includes(elem));
-  return arr.length;
+  return arr.filter((item) => Boolean(item) === false).length;
 }
 
 /**
@@ -665,14 +646,15 @@ function getElementByIndexes(arr, indexes) {
  *     head     tail
  *
  *   [ 1, 2 ]  => [ 2, 1 ]
+ *   [ 1, 2, 3, 4 ]  => [ 3, 4, 1, 2 ]
  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
  *
  */
 function swapHeadAndTail(arr) {
   const middle = Math.floor(arr.length / 2);
-  const tail = arr.slice(middle);
+  const tail = arr.slice(-middle);
   const head = arr.slice(0, middle);
-  return tail.concat(head);
+  return tail.concat(arr, head);
 }
 
 module.exports = {

@@ -37,6 +37,8 @@ module.exports = {
     "function-paren-newline": ["error", "consistent"],
     "object-shorthand": 0,
     "prefer-template": 0,
-    "no-restricted-globals": ["error", "event", "fdescribe"]
+    "no-restricted-globals": ["error", "event", "fdescribe"],
+    "prefer-promise-reject-errors": 0,
+    "no-console": 0
   },
 };
