@@ -39,6 +39,7 @@ module.exports = {
     "prefer-template": 0,
     "no-restricted-globals": ["error", "event", "fdescribe"],
     "prefer-promise-reject-errors": 0,
-    "no-console": 0
+    "no-console": 0,
+    "no-mixed-operators": 0
   },
 };

@@ -35,15 +35,7 @@ function findElement(arr, value) {
  *    5 => [ 1, 3, 5, 7, 9 ]
  */
 function generateOdds(len) {
-  let x = 0;
-  const arr = [];
-  let a = 1;
-  while (x < len) {
-    arr.push(a);
-    a += 2;
-    x++;
-  }
-  return arr;
+  return Array.from({length: len}, (_, index) => (index * 2) + 1);
 }
 
 /**
@@ -307,7 +299,7 @@ function propagateItemsByPositionIndex(arr) {
  *   [ 10, 10, 10, 10 ] => [ 10, 10, 10 ]
  */
 function get3TopItems(arr) {
-  arr.sort((a, b) => b - a).slice(0, 3);
+  return arr.sort((a, b) => b - a).slice(0, 3);
 }
 
 /**
@@ -652,8 +644,8 @@ function getElementByIndexes(arr, indexes) {
  */
 function swapHeadAndTail(arr) {
   const middle = Math.floor(arr.length / 2);
-  const tail = arr.slice(-middle);
-  const head = arr.slice(0, middle);
+  const tail = arr.splice(-middle);
+  const head = arr.splice(0, middle);
   return tail.concat(arr, head);
 }
 

@@ -205,12 +205,11 @@ function extractEmails(str) {
  *
  */
 function getRectangleString(width, height) {
-  const topBottom = '┌' + '─'.repeat(width - 2) + '┐\n';
-  const middle = '│' + ' '.repeat(width - 2) + '│\n'.repeat(height - 2);
-  const bottom = '└' + '─'.repeat(width - 2) + '┘\n';
-  return topBottom + middle.repeat(height - 2) + bottom;
+  const top = `┌${'─'.repeat(width - 2)}┐\n`;
+  const middle = `│${' '.repeat(width - 2)}│\n`;
+  const bottom = `└${'─'.repeat(width - 2)}┘\n`;
+  return top + middle.repeat(height - 2) + bottom;
 }
-
 
 /**
  * Encode specified string with ROT13 cipher

@@ -103,8 +103,7 @@ function chainPromises(promises, callback) {
   return new Promise((resolve, reject) => {
     let result = 0;
     promises.forEach((promise, index) => {
-      promise
-        .then((value) => {
+      promise.then((value) => {
           result = callback(result, value);
           if (index === promises.length - 1) {
             resolve(result);
